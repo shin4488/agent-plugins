@@ -1,0 +1,17 @@
+{
+  "name": "agent-plugins",
+  "description": "複数リポジトリで共有する開発用プラグイン",
+  "owner": { "name": "shin4488" },
+  "plugins": [
+    {
+      "name": "agent-plugins",
+      "source": "./",
+      "description": "Claude Code・Codexで共有する開発用skillsとhooks",
+      "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      }
+    }
+  ]
+}

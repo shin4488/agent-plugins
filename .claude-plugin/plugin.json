@@ -1,0 +1,7 @@
+{
+  "name": "agent-plugins",
+  "version": "0.1.0",
+  "description": "複数リポジトリで使う開発用skillsと編集後hooks",
+  "author": { "name": "shin4488" },
+  "repository": "https://github.com/shin4488/agent-plugins"
+}
