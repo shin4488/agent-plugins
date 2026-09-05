@@ -5,14 +5,8 @@ Claude CodeとCodexで使う開発用skills・hooksを、一つのリポジト�
 
 ## 導入
 
-利用するリポジトリをcloneし、導入ターゲットが用意されていれば、そのリポジトリで実行する。
-
-```bash
-make setup
-```
-
-インストール済みのClaude・Codexにだけ導入する。CLIがない場合はスキップを表示する。
-この共通リポジトリを別途cloneする必要はない。導入ターゲットのないリポジトリでも、以下のCLIコマンドで利用できる。
+利用するリポジトリに導入手順があれば、そのREADMEに従う。ターゲット名やCLI未導入時の扱いは利用側で管理する。
+手動で導入する場合は、使うツールのCLIで以下を実行する。この共通リポジトリを別途cloneする必要はない。
 
 | ツール | 登録・インストール |
 | --- | --- |
@@ -24,26 +18,6 @@ make setup
 - 自分で信頼を確認したリポジトリで使う。共通hookはリポジトリ内のスクリプトや開発ツールを実行するため、プラグインへの信頼だけでリポジトリのコードまで安全と判断しない。
 - ホストにはBash・Git・jq・realpathが必要。Terraform・Biome・Dockerなどは各リポジトリの環境構築手順で準備する。
 - Claudeの `permissions` はCodexに引き継がれない。
-
-利用側Makefileに置くターゲット:
-
-```makefile
-.PHONY: setup
-
-setup:
-	@if command -v claude >/dev/null 2>&1; then \
-		claude plugin marketplace add shin4488/agent-plugins --scope user && \
-		claude plugin install agent-plugins@agent-plugins --scope user; \
-	else \
-		printf '%s\n' 'Claude Code is not installed; skipping plugin setup.'; \
-	fi
-	@if command -v codex >/dev/null 2>&1; then \
-		codex plugin marketplace add shin4488/agent-plugins && \
-		codex plugin add agent-plugins@agent-plugins; \
-	else \
-		printf '%s\n' 'Codex is not installed; skipping plugin setup.'; \
-	fi
-```
 
 ## Skills
 
@@ -80,7 +54,7 @@ flowchart LR
 | --- | --- | --- |
 | `.tf` | 編集ファイルだけに `terraform fmt` | ファイルのディレクトリで起動し、リポジトリのバージョン指定を使う |
 | `.tf` | `terraform validate -no-color` | 編集ファイルと同じディレクトリに `.terraform` がある場合、ディレクトリごとに1回 |
-| `.ts`・`.tsx`・`.js`・`.jsx`・`.json`・`.jsonc`・`.css`・`.html` | `biome check --write` | ファイルの祖先にあるリポジトリ内の最上位の `biome.json` / `biome.jsonc` と、インストール済みのBiomeを使う |
+| `.ts`<br>`.tsx`<br>`.js`<br>`.jsx`<br>`.json`<br>`.jsonc`<br>`.css`<br>`.html` | `biome check --write` | ファイルの祖先にあるリポジトリ内の最上位の `biome.json` / `biome.jsonc` と、インストール済みのBiomeを使う |
 
 - 編集したファイルだけを渡し、Biomeはプロジェクトごとにまとめて実行する。入れ子の設定や `extends` の解決はBiomeに任せ、同じファイルを二重処理しない。
 - Biomeのルール・除外指定・バージョンはリポジトリ側のものを使う。ESLintだけのリポジトリなど、Biome設定のない場所には適用しない。除外設定で処理対象が0件になってもエラーにはしない。
@@ -99,17 +73,7 @@ flowchart LR
 | 標準入力 | 元のイベントJSONは渡さない |
 | 結果 | 標準出力・標準エラー・終了コードをそのまま引き継ぐ |
 
-簡単な例（全対象をまとめて検査するリポジトリ）:
-
-```bash
-#!/usr/bin/env bash
-# 複数ファイルを編集しても、リポジトリ全体の検査をファイル数だけ繰り返さない。
-for file; do
-  case "$file" in
-    *.ts | *.tsx) exec make lint ;;
-  esac
-done
-```
+専用hookでは、引数のファイルに応じてリポジトリ既存の整形・検査コマンドを呼ぶ。リポジトリ全体を検査する場合は、ファイルごとに繰り返さず1回にまとめる。対象拡張子やコマンド名は利用側で管理する。
 
 ファイルはGit管理し、各開発者のcloneに含める。共通処理も含めて実行不要なリポジトリでは、このファイルを `exit 0` だけにできる。リポジトリ外のスクリプトへのシンボリックリンクは呼ばない。
 
@@ -140,7 +104,7 @@ agent-plugins/
         └── format-lint.sh    # Terraform・Biomeの標準処理
 ```
 
-導入ターゲットは利用側Makefileに置く。プラグインの実体やインストーラは利用側に複製しない。GitHubで管理する実体は一つで、インストール先キャッシュはツールごとに分かれる。個人名やメールは定義に書かず、公開済みのGitHubアカウント名を使う。
+導入を自動化する場合は、[導入](#導入)の登録・インストールコマンドを利用側のセットアップに組み込む。プラグインの実体は利用側に複製しない。GitHubで管理する実体は一つで、インストール先キャッシュはツールごとに分かれる。個人名やメールは定義に書かず、公開済みのGitHubアカウント名を使う。
 
 ## 更新
 

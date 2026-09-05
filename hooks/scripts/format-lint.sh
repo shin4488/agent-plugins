@@ -2,8 +2,9 @@
 # 作業ディレクトリはリポジトリルート、引数は編集済みファイルの絶対パス。
 project_dir=$PWD
 terraform_dirs=()
-biome_dirs=()
+# 同じ添字に、対象ファイルとその起点となる設定ディレクトリを保持する。
 biome_files=()
+biome_config_dirs=()
 status=0
 
 # NUL区切りで、空白や改行を含むディレクトリも1件として扱う。
@@ -32,12 +33,14 @@ for file; do
         if [ -f "$dir/biome.json" ] || [ -f "$dir/biome.jsonc" ]; then
           config_dir=$dir
         fi
-        [ "$dir" != "$project_dir" ] || break
+        if [ "$dir" = "$project_dir" ]; then
+          break
+        fi
         dir=${dir%/*}
       done
       if [ -n "$config_dir" ]; then
-        biome_dirs+=("$config_dir")
         biome_files+=("$file")
+        biome_config_dirs+=("$config_dir")
       fi
       ;;
   esac
@@ -54,30 +57,33 @@ while IFS= read -r -d '' dir; do
   fi
 done < <(unique_dirs "${terraform_dirs[@]}")
 
-while IFS= read -r -d '' dir; do
-  [ -n "$dir" ] || continue
+while IFS= read -r -d '' config_dir; do
   # リポジトリのバージョンを使う。npxによる自動取得やホストの別バージョンへの代替はしない。
   # monorepoの依存配置に合わせ、設定の場所からリポジトリルートまでを探索する。
-  package_dir=$dir
+  package_dir=$config_dir
   while [ ! -x "$package_dir/node_modules/.bin/biome" ]; do
-    [ "$package_dir" != "$project_dir" ] || break
+    if [ "$package_dir" = "$project_dir" ]; then
+      break
+    fi
     package_dir=${package_dir%/*}
   done
   biome="$package_dir/node_modules/.bin/biome"
   if [ ! -x "$biome" ]; then
-    printf 'Biomeをスキップ（依存未インストール）: %s\n' "$dir" >&2
+    printf 'Biomeをスキップ（依存未インストール）: %s\n' "$config_dir" >&2
     continue
   fi
   targets=()
   # 同じ設定を起点にするファイルをまとめ、別プロジェクトの対象を混ぜない。
   for i in "${!biome_files[@]}"; do
-    [ "${biome_dirs[$i]}" != "$dir" ] || targets+=("${biome_files[$i]}")
+    if [ "${biome_config_dirs[$i]}" = "$config_dir" ]; then
+      targets+=("${biome_files[$i]}")
+    fi
   done
   # リポジトリの設定・除外指定を使い、Biomeが安全と分類する修正だけを適用する。
   # --unsafeは付けず、残る指摘をエージェントへ返す。
   # 自動探索に任せず、ファイルごとに選んだ設定の場所を明示する。
   # 除外設定で対象が0件になった場合だけは正常終了とし、設定エラー等は隠さない。
-  (cd "$dir" && "$biome" check --write --no-errors-on-unmatched --config-path="$dir" "${targets[@]}") >&2 || status=2
-done < <(unique_dirs "${biome_dirs[@]}")
+  (cd "$config_dir" && "$biome" check --write --no-errors-on-unmatched --config-path="$config_dir" "${targets[@]}") >&2 || status=2
+done < <(unique_dirs "${biome_config_dirs[@]}")
 
 exit "$status"
