@@ -78,10 +78,6 @@ agent-plugins/
 
 ---
 
-## スキルの保守
-
-[OpenAIのガイド](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)を参考に、説明は用途と適用条件に絞り、特定の作業でしか使わない詳細は必要時に読む資料へ分けます。安全上の制約や完了条件は保ち、重複した指示や同じ条件での再検証を減らします。編集・検証の方針は [開発ガイド](CLAUDE.md) にまとめています。
-
 ## プラグインの更新
 
 ```bash
