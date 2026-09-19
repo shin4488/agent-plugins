@@ -45,7 +45,7 @@ Claude Code や OpenAI Codex などのAIコーディングツールで共通利�
 ツールによるファイル編集後、自動的にコード整形や静的解析（lint）を実行するフックを提供しています。
 
 ```mermaid
-flowchart TD
+flowchart LR
     Edit["エージェントによるファイル編集<br>（Write / Edit など）"] --> Hook["共通フック実行<br>（編集対象ファイルの特定）"]
     Hook --> Check{"リポジトリ固有の<br>.claude/hooks/post-edit.sh<br>が存在するか？"}
     Check -->|Yes| Custom["リポジトリ専用の検査・整形を実行<br>（Docker、Makefileなど）"]
