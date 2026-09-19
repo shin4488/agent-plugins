@@ -35,6 +35,7 @@ Claude Code や OpenAI Codex などのAIコーディングツールで共通利�
 | **release** | リポジトリの規約に沿ったタグ打ち・リリースノート作成 |
 | **pin-github-actions** | 外部GitHub Actionsの参照をcommit SHAに固定・検証 |
 | **review-dependabot-prs** | 依存関係更新PRの変更内容・CI状態をチェックし、マージ可否を判断 |
+| **fix-security-alerts** | GitHubの検出結果・解析警告を切り分け、既存スキルを使って対応PRを作成・解消状態を確認 |
 | **spec-based-testing** | 仕様と振る舞いに基づくテストケースの設計 |
 | **security-review** | 入力値・権限・通信などのセキュリティ観点でのレビュー・改善 |
 
