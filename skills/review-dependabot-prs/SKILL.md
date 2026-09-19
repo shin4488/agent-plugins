@@ -1,6 +1,6 @@
 ---
 name: review-dependabot-prs
-description: Dependabotの依存更新PRについて、更新元・互換性・CIの検証内容を確認し、マージ可能か判断する。Dependabot PRのレビューやマージを依頼されたときに使う。
+description: Dependabot PRのレビュー・マージ依頼に、更新元・互換性・CIを確認して可否を判断する。
 ---
 
 # Dependabot PRをレビューする
