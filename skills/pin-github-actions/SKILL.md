@@ -1,6 +1,6 @@
 ---
 name: pin-github-actions
-description: GitHub Actionsの外部uses参照をフルcommit SHAとバージョンコメントに固定・検証する。Actionの追加、参照の固定、固定済みActionの更新を依頼されたときに使う。
+description: GitHub Actionsの外部uses参照を追加・更新・固定するときに、フルcommit SHAと版を検証する。
 ---
 
 # GitHub Actionsの参照を固定する

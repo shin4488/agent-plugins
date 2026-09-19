@@ -1,6 +1,6 @@
 ---
 name: fix-security-alerts
-description: GitHubのSecurity and qualityにあるDependabot・Code scanning・Secret scanningの検出結果を調査し、修正可能なものの対応PRを作成・更新する。セキュリティアラートや解析警告への対応を依頼されたときに使う。
+description: GitHubのセキュリティアラートや解析警告への対応時に、調査・修正PR作成・解消確認を行う。
 ---
 
 # GitHubの検出結果から修正PRを作る
