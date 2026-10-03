@@ -89,3 +89,9 @@ claude plugin update agent-plugins@agent-plugins --scope user
 codex plugin marketplace upgrade agent-plugins
 codex plugin add agent-plugins@agent-plugins
 ```
+
+## リポジトリのCode scanning
+
+[Shell code scanning](.github/workflows/code-scanning.yml) がmainへのpush、PR、毎週の実行でShellCheckの結果をGitHubのSecurity → Code scanningへ登録します。シェルを実行せずに解析し、エントリーポイントの `post-edit.sh`・`format-lint.sh` と、`post-edit.sh` がsourceする `edited-files.sh` を対象にします。エントリーポイントを追加した場合はworkflowの対象も更新してください。
+
+公開リポジトリの標準Ubuntu runnerだけを使い、Actionsのartifact保存・キャッシュ・大型runnerは使いません。非公開化された場合はジョブを実行しません。ShellCheckはシェルの静的解析であり、Markdownの指示内容やすべての脆弱性を検証するものではありません。
