@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   shellcheck:
-    # 公開repoの標準runnerだけを使い、非公開化された場合も課金対象で実行しない。
+    # 公開リポジトリの標準runnerだけを使い、非公開化された場合も課金対象で実行しない。
     if: github.event.repository.private == false
     runs-on: ubuntu-24.04
     timeout-minutes: 5
