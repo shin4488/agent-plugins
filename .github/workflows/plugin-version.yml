@@ -1,0 +1,23 @@
+name: Plugin version
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    # 公開repoの標準runnerだけを使い、非公開化された場合も課金対象で実行しない。
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # PRのmerge commitと、1つ目の親（マージ先）を比較する。
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Require version bump for skills and hooks
+        run: python3 .github/scripts/check_plugin_version.py HEAD^1 HEAD

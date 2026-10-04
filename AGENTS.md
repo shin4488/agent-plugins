@@ -6,7 +6,7 @@ Claude Code・Codexで共有するskillsとhooksの配布元。導入・更新�
 
 - スキルの実体は `skills/<名前>/SKILL.md`。プラグイン内で共有し、利用側に手順や実装をコピーしない。
 - hookは `hooks/hooks.json` と `hooks/scripts/`。変更時は [編集後のhooks](README.md#編集後フックpost-edit)の入出力・対象・制限を確認し、ClaudeとCodexの両方への影響を検証する。
-- 配布設定は `.claude-plugin/marketplace.json` と両ツールの `plugin.json`（`.claude-plugin/`・`.codex-plugin/`）。配布仕様や公開手順を変える場合は [更新](README.md#プラグインの更新)も確認し、両manifestのversionをそろえる。
+- 配布設定は `.claude-plugin/marketplace.json` と両ツールの `plugin.json`（`.claude-plugin/`・`.codex-plugin/`）。配布仕様や公開手順を変える場合は [更新](README.md#プラグインの更新)も確認する。`skills/`・`hooks/` を変えたら両manifestのversionをそろえて上げる（Claude Codeはversionが同じだと更新しない。PRのCIで確認する）。
 - 共有設定の変更は複数リポジトリに影響する。特定リポジトリの検証はそのリポジトリの設定に任せ、共通hookに固有のコマンドを増やさない。権限・マージ・公開の許可は、skillの存在や導入だけでは追加されない。
 
 ## スキルの書き方
