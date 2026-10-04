@@ -32,6 +32,6 @@ jobs:
           old=$(version HEAD^1 .claude-plugin/plugin.json)
           # -Cu: old < new の順に厳密に並んでいるか確認する。
           if ! printf '%s\n' "$old" "$new" | sort -CuV; then
-            echo "::error file=.claude-plugin/plugin.json::skills/・hooks/ を変更したため、両manifestのversionを $old より上げてください"
+            echo "::error file=.claude-plugin/plugin.json::配布対象のファイルを変更したため、両manifestのversionを $old より上げてください"
             exit 1
           fi
