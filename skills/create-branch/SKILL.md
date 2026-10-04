@@ -15,7 +15,7 @@ description: 新しい作業ブランチやworktreeを作るときに、既存�
 4. 内容を表す名前でブランチを作る。
 
 ```bash
-git switch -c <作業ブランチ> <remote>/<基点ブランチ>
+git switch -c <作業ブランチ> --no-track <remote>/<基点ブランチ>
 ```
 
 5. 現在のブランチと基点を確認し、作業を続ける。
@@ -27,7 +27,7 @@ git switch -c <作業ブランチ> <remote>/<基点ブランチ>
 `git worktree list` で既存の作業場所を確認し、空いている保存先に作る。元のチェックアウトの変更をstash・移動する必要はない。
 
 ```bash
-git worktree add -b <作業ブランチ> <保存先> <remote>/<基点ブランチ>
+git worktree add --no-track -b <作業ブランチ> <保存先> <remote>/<基点ブランチ>
 ```
 
 コミット・PR作成は、依頼された場合に該当skillを使う。
