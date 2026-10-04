@@ -1,0 +1,36 @@
+name: Plugin version
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    # 課金を避けるため、公開リポジトリの標準runnerでだけ実行し、非公開化されたら実行しない。
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      # Claude Codeはversionが同じだと `plugin update` で更新しないため、配布対象の変更時は上げる。
+      - name: Require version bump for skills and hooks
+        run: |
+          version() { git show "$1:$2" | jq -r .version; }
+          new=$(version HEAD .claude-plugin/plugin.json)
+          if [ "$new" != "$(version HEAD .codex-plugin/plugin.json)" ]; then
+            echo "::error file=.codex-plugin/plugin.json::両manifestのversionをそろえてください"
+            exit 1
+          fi
+          git diff --quiet HEAD^1 HEAD -- skills hooks && exit 0
+          old=$(version HEAD^1 .claude-plugin/plugin.json)
+          # -Cu: old < new の順に厳密に並んでいるか確認する。
+          if ! printf '%s\n' "$old" "$new" | sort -CuV; then
+            echo "::error file=.claude-plugin/plugin.json::配布対象のファイルを変更したため、両manifestのversionを $old より上げてください"
+            exit 1
+          fi
