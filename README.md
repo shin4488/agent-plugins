@@ -31,7 +31,7 @@ Claude Code や OpenAI Codex などのAIコーディングツールで共通利�
 | **commit** | 変更内容を意味のある単位にまとめてコミット |
 | **create-pr** | 変更内容と検証結果をまとめたプルリクエストを作成 |
 | **verify-changes** | 変更の動作検証、機密情報の有無、ドキュメントの整合性を確認 |
-| **post-merge** | マージ後の反映確認とブランチ整理 |
+| **post-merge** | マージ後の反映確認・本番デプロイ・本番確認・リリースとブランチ整理 |
 | **release** | リポジトリの規約に沿ったタグ打ち・リリースノート作成 |
 | **pin-github-actions** | 外部GitHub Actionsの参照をcommit SHAに固定・検証 |
 | **review-dependabot-prs** | 依存関係更新PRの変更内容・CI状態をチェックし、マージ可否を判断 |
