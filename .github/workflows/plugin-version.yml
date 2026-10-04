@@ -16,7 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # PRのmerge commit（HEAD）と1つ目の親（マージ先）を比較する。
           fetch-depth: 2
           persist-credentials: false
       # Claude Codeはversionが同じだと `plugin update` で更新しないため、配布対象の変更時は上げる。
