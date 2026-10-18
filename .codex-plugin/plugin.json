@@ -1,6 +1,6 @@
 {
   "name": "agent-plugins",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "複数リポジトリで使う開発用skillsと編集後hooks",
   "author": { "name": "shin4488" },
   "repository": "https://github.com/shin4488/agent-plugins",
@@ -8,7 +8,7 @@
   "interface": {
     "displayName": "Agent Plugins",
     "shortDescription": "開発用skillsと編集後hooksを共有する",
-    "longDescription": "Git・PR・リリースの手順、変更の検証、編集後のTerraform・Biome処理をClaude CodeとCodexで共有します。",
+    "longDescription": "Git・PR・リリースの手順、変更の検証、大きな変更の進め方、文書の書き方、編集後のTerraform・Biome処理をClaude CodeとCodexで共有します。",
     "developerName": "shin4488",
     "category": "Productivity",
     "capabilities": [],
