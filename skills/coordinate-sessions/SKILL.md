@@ -9,7 +9,7 @@ description: ユーザーが作業を親セッションと子セッションに�
 
 変えてはいけない動作（守る条件）は、それにかかわる変更より前に検証の方法（変更の前後で結果を比べる、テストを足すなど）を用意し、変更のたびにその方法で確かめる。検証の方法は、変更していない状態では同じ結果になり、守る条件を破ると失敗することを確かめてから使う。守る条件のない調査では要らない。
 
-計画・指示書・PRの本文・報告は [clear-writing](../clear-writing/SKILL.md) に従って書く。子セッションのブランチ・コミット・検証・PRは [create-branch](../create-branch/SKILL.md)・[commit](../commit/SKILL.md)・[verify-changes](../verify-changes/SKILL.md)・[create-pr](../create-pr/SKILL.md)、マージの後の反映と本番の確認は [post-merge](../post-merge/SKILL.md)、検証のためのテストの設計は [spec-based-testing](../spec-based-testing/SKILL.md) に従う。
+計画・指示書・PRの本文・報告は [clear-writing](../clear-writing/SKILL.md) に従って書く。子セッションのブランチ・コミット・検証・PRは [create-branch](../create-branch/SKILL.md)・[commit](../commit/SKILL.md)・[verify-changes](../verify-changes/SKILL.md)・[create-pr](../create-pr/SKILL.md)、マージの後の反映と本番の確認は [post-merge](../post-merge/SKILL.md)、検証のためのテストの設計は [spec-based-testing](../spec-based-testing/SKILL.md) に従う。記録・指示書・引き継ぐことをIssueなど外部から見える場所に書くときは、[verify-changes](../verify-changes/SKILL.md#機密情報の扱い) の機密情報の扱いに従い、公開すべきでない情報を入れない。
 
 ## 役割
 
@@ -65,7 +65,7 @@ sequenceDiagram
 | 目的 | 作る成果と、分割の図の中での位置 |
 | 読むもの | 関係するファイル・資料と、読まなくてよい範囲 |
 | 引き継ぐこと | 前の子セッションから引き継ぐことのうち、この子セッションにかかわるもの |
-| 守ること | 守る条件と変えてはいけない範囲。守る条件にかかわる挙動の違いが見つかったときや、指示書にない判断が要るときは、作業を止めてユーザーに示すこと。親セッションの記録は直さないこと |
+| 守ること | 守る条件と変えてはいけない範囲。守る条件にかかわる挙動の違いが見つかったときや、指示書にない判断が要るときは、作業を止めてユーザーに示すこと。親セッションの記録は直さないこと。外部から見える場所に書くときに、公開すべきでない情報を入れないこと |
 | 完了の条件 | 合否の基準。後続の子セッションに引き継ぐことがあれば、それを書く場所 |
 
 - 子セッションが終わったとユーザーから伝えられたら、PRの状態・CI・検証の結果・本番への反映と確認の事実を確かめて記録を更新する。事実がPRや報告と食い違えば、記録を更新せずにユーザーに示す。
