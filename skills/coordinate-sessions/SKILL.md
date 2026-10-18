@@ -9,7 +9,7 @@ description: ユーザーが作業を親セッションと子セッションに�
 
 変えてはいけない動作（守る条件）は、それにかかわる変更より前に検証の方法（変更の前後で結果を比べる、テストを足すなど）を用意し、変更のたびにその方法で確かめる。検証の方法は、変更していない状態では同じ結果になり、守る条件を破ると失敗することを確かめてから使う。守る条件のない調査では要らない。
 
-計画・指示書・PRの本文・報告は [clear-writing](../clear-writing/SKILL.md) に従って書く。子セッションのブランチ・コミット・検証・PRは [create-branch](../create-branch/SKILL.md)・[commit](../commit/SKILL.md)・[verify-changes](../verify-changes/SKILL.md)・[create-pr](../create-pr/SKILL.md)、マージの後の反映と本番の確認は [post-merge](../post-merge/SKILL.md)、検証のためのテストの設計は [spec-based-testing](../spec-based-testing/SKILL.md) に従う。記録・指示書・引き継ぐことをIssueなど外部から見える場所に書くときは、[verify-changes](../verify-changes/SKILL.md#機密情報の扱い) の機密情報の扱いに従い、公開すべきでない情報を入れない。
+計画・記録・指示書・報告は [clear-writing](../clear-writing/SKILL.md) に従って書く。記録・指示書・引き継ぐことをIssueなど外部から見える場所に書くときは、[verify-changes](../verify-changes/SKILL.md#機密情報の扱い) の機密情報の扱いに従い、公開すべきでない情報を入れない。
 
 ## 役割
 
