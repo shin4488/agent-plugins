@@ -1,11 +1,11 @@
 ---
-name: coordinate-large-changes
-description: 1つのセッション・PRに収まらない大きな変更・移行・調査を、守る条件を保ったまま複数のセッションに分けて進めるときに、親セッションとして計画・分割・指示書・進捗の記録を行う。
+name: coordinate-sessions
+description: ユーザーが作業を親セッションと子セッションに分けて進めたいときに、守る条件を保ったまま、親セッションとして計画・分割・指示書・進捗の記録を行う。
 ---
 
-# 大きな変更を複数のセッションに分けて進める
+# 作業を複数のセッションに分けて進める
 
-1つのセッションの文脈に収まらない作業を、1つの子セッションで1つの成果（変更ならPR、調査なら結論の文書など）に分けて進める。このskillは、全体をまとめる親セッションで使う。守る条件（変えないもの）は、変える前に用意した安全網で確かめる。
+作業を、1つの子セッションで1つの成果（変更ならPR、調査なら結論の文書など）に分けて進める。作業の大きさにかかわらず、ユーザーがこの進め方を選んだときに、全体をまとめる親セッションで使う。守る条件（変えないもの）は、変える前に用意した安全網で確かめる。
 
 計画・指示書・PRの本文・報告は [clear-writing](../clear-writing/SKILL.md) に従って書く。子セッションのブランチ・コミット・検証・PRは [create-branch](../create-branch/SKILL.md)・[commit](../commit/SKILL.md)・[verify-changes](../verify-changes/SKILL.md)・[create-pr](../create-pr/SKILL.md)、マージの後の反映と本番の確認は [post-merge](../post-merge/SKILL.md)、安全網のテストの設計は [spec-based-testing](../spec-based-testing/SKILL.md) に従う。
 
