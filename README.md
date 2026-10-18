@@ -38,6 +38,7 @@ Claude Code や OpenAI Codex などのAIコーディングツールで共通利�
 | **fix-security-alerts** | GitHubの検出結果・解析警告を切り分け、既存スキルを使って対応PRを作成・解消状態を確認 |
 | **spec-based-testing** | 仕様と振る舞いに基づくテストケースの設計 |
 | **security-review** | 入力値・権限・通信などのセキュリティ観点でのレビュー・改善 |
+| **clear-writing** | 文書・PR本文・コードコメントを、一般的な用語と図・表でわかりやすく書くための決まり |
 
 ---
 
