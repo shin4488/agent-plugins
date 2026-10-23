@@ -7,6 +7,7 @@ input=$(cat)
 event_cwd=$(jq -er '.cwd | strings | select(length > 0)' <<< "$input")
 project_dir=$(git -C "$event_cwd" rev-parse --show-toplevel 2>/dev/null) || exit 0
 cd "$project_dir"
+# realpathの結果と前方一致で比べるため、リンクを解決したパスにそろえる。
 project_dir=$(pwd -P)
 
 # 両ツールの入力差をここで吸収し、リポジトリ側にJSON解析を複製させない。
