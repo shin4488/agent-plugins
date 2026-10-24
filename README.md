@@ -1,6 +1,6 @@
 # Agent Plugins
 
-Claude Code と OpenAI Codex で共通して使う、開発用スキル（Skills）とフック（Hooks）を管理するリポジトリです。両ツールが同じ `SKILL.md` とフックのスクリプトを使います。
+Claude Code と OpenAI Codex で同じ `SKILL.md` とフックのスクリプトを使う、開発用スキル（Skills）とフック（Hooks）のリポジトリです。
 
 ## 導入方法
 
@@ -34,7 +34,7 @@ Claude Code と OpenAI Codex で共通して使う、開発用スキル（Skills
 
 ## 編集後フック（post-edit）
 
-ツールによるファイル編集（Write・Edit・MultiEdit・apply_patch）の後に、編集したファイルのコード整形や静的解析（lint）を実行します。対象は、編集時の作業ディレクトリが属するGitリポジトリ内に存在するファイルです。失敗した編集、削除したファイル、リポジトリ外のファイルは対象にしません。
+ツールによるファイル編集（Write・Edit・MultiEdit・apply_patch）の後に、編集したファイルのコード整形や静的解析（lint）を実行します。対象は、編集時の作業ディレクトリが属するGitリポジトリ内に存在するファイルです。ツールの応答で失敗が明示された編集（`tool_response.success` が `false`）、削除したファイル、リポジトリ外のファイルは対象にしません。
 
 ```mermaid
 flowchart LR
@@ -57,14 +57,16 @@ flowchart LR
 
 ### リポジトリ固有のカスタマイズ
 
-リポジトリ内に `.claude/hooks/post-edit.sh` を配置することで、プロジェクト独自のビルドツール（Docker環境内でのテストや専用Linter）に処理を置き換えることができます。
+リポジトリのルートに `.claude/hooks/post-edit.sh` を置くと、標準処理の代わりにこのスクリプトを実行します。Docker内でのテストや専用のLinterなど、リポジトリ固有の検査・整形に使います。
 
-| 受け渡し | 内容 |
+| 項目 | 内容 |
 |---|---|
+| 実行方法 | shebangに関係なく `bash` で実行します。実行権限は要りません |
 | 作業ディレクトリ | Gitリポジトリのルート |
 | 引数 | 編集したファイルの絶対パス。1回の編集で複数のファイルを変えた場合は、まとめて1回で渡します |
 | 標準入力 | 編集イベントのJSONは渡しません |
 | 結果 | 標準出力・標準エラー出力・終了コードをそのまま返します |
+| 時間の上限 | `hooks/hooks.json` の `timeout`（秒）を超えると、フック全体が中止され、出力は返りません |
 
 `.claude/hooks/post-edit.sh` がシンボリックリンクでリポジトリ外のファイルを指す場合は、このスクリプトも標準処理も実行しません。
 
@@ -72,7 +74,7 @@ flowchart LR
 
 ```text
 agent-plugins/
-├── .claude-plugin/       # Claude Code 向けプラグイン定義
+├── .claude-plugin/       # Claude Code 向けプラグイン定義と、両ツールが読むマーケットプレイス定義
 ├── .codex-plugin/        # Codex 向けプラグイン定義
 ├── skills/               # 各スキルの定義（SKILL.md）
 └── hooks/                # フック設定と共通実行スクリプト
