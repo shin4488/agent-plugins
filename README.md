@@ -34,7 +34,7 @@ Claude Code と OpenAI Codex で同じ `SKILL.md` とフックのスクリプト
 
 ## 編集後フック（post-edit）
 
-ツールによるファイル編集（Write・Edit・MultiEdit・apply_patch）の後に、編集したファイルのコード整形や静的解析（lint）を実行します。対象は、編集時の作業ディレクトリが属するGitリポジトリ内に存在するファイルです。ツールの応答で失敗が明示された編集（`tool_response.success` が `false`）、削除したファイル、リポジトリ外のファイルは対象にしません。
+ツールによるファイル編集（Write・Edit・MultiEdit・apply_patch）の後に、編集したファイルのコード整形や静的解析（lint）を実行します。対象は、編集時の作業ディレクトリが属するGitリポジトリ内に存在するファイルです。失敗した編集、削除したファイル、リポジトリ外のファイルは対象にしません。
 
 ```mermaid
 flowchart LR
