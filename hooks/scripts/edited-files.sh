@@ -18,7 +18,7 @@ files=()
 while IFS= read -r -d '' path; do
   case "$path" in /*) ;; *) path="$event_cwd/$path" ;; esac
   [ -f "$path" ] || continue
-  # ../ とリンクを解決し、リポジトリ外と削除済みファイルを除外する。
+  # ../ とリンクを解決し、リポジトリ外のファイルを除外する。
   # 末尾が改行のファイル名も、コマンド置換で欠けないようにする。
   path=$(realpath "$path" && printf '.') || exit 2
   path=${path%$'\n.'}

@@ -19,8 +19,8 @@ description: GitHubのセキュリティアラートや解析警告への対応�
 | 検出結果 | このスキルで判断すること |
 | --- | --- |
 | Dependabot Vulnerabilities | manifest・lockfile・実際の依存経路を照合する。既存の対応PRがあれば [review-dependabot-prs](../review-dependabot-prs/SKILL.md) へつなぎ、重複PRを作らない。新規の更新でも同スキルの更新元・互換性の判断基準を使う。修正版がない、または安全に更新できないものは未解決として残す。 |
-| Dependabot Malware | 脆弱性アラートとは分けて、悪意あるパッケージ・版と導入経路を確認する。疑わしい版を調査やテストのために実行せず、削除・信頼できる版への置換を検討する。既に実行された場合の影響調査や認証情報の対応は、依存更新PRだけで解決したと扱わない。 |
-| Code scanning | CodeQLに限らず、検出ツール・ルール・対象ブランチ／コミット・解析設定を確認する。指摘箇所から実際の到達経路をたどり、安全性の判断・対策は [security-review](../security-review/SKILL.md) を使う。品質上の指摘は、そのルールが指す動作・仕様との不一致を確認する。 |
+| Dependabot Malware | 脆弱性アラートとは分けて、悪意あるパッケージ・版と導入経路を確認する（[Malwareアラートの確認](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-dependabot-alerts/manage-malware-alerts)）。疑わしい版を調査やテストのために実行せず、削除・信頼できる版への置換を検討する。既に実行された場合の影響調査や認証情報の対応は、依存更新PRだけで解決したと扱わない。 |
+| Code scanning | CodeQLに限らず、検出ツール・ルール・対象ブランチ／コミット・解析設定を確認する（[Code scanningのブランチ・経路・解析状態の確認](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-code-scanning-alerts/assess-alerts)）。指摘箇所から実際の到達経路をたどり、安全性の判断・対策は [security-review](../security-review/SKILL.md) を使う。品質上の指摘は、そのルールが指す動作・仕様との不一致を確認する。 |
 | 解析の失敗・警告 | 解析不能、対象言語やファイルの欠落、権限不足など、検出の有効性に影響する原因を調べる。実際の脆弱性と件数を混ぜず、必要なら解析設定の修正PRに分ける。 |
 | Secret scanning | 公開識別子・ダミー・実際の認証情報を区別する。コード上の置換と、漏えいした認証情報の無効化・再発行を分けて扱う。ファイルから削除しただけでは漏えいを解消したと扱わず、PRで対応できない作業を明示する。 |
 
@@ -37,11 +37,5 @@ description: GitHubのセキュリティアラートや解析警告への対応�
 
 - PR作成時点では「修正PR作成済み」と報告する。マージも依頼されている場合は対象headとCIを確認して進め、[post-merge](../post-merge/SKILL.md) の後、対象ブランチ・コミットの解析結果とアラート状態を再取得する。
 - 「コード修正済み」「再解析待ち」「GitHub上で解消確認済み」を区別する。解析設定・対象の欠落によって見かけ上アラートが消えた場合は解消としない。
-- Secret scanningはコードからの削除だけでは自動クローズされない。クローズ・dismissは解消／誤検知の根拠と操作の依頼範囲に従い、件数を減らす目的では行わない。
+- Secret scanningはコードからの削除だけでは自動クローズされない（[Secret scanningの修正とクローズ](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-secret-scanning-alerts/resolving-alerts)）。クローズ・dismissは解消／誤検知の根拠と操作の依頼範囲に従い、件数を減らす目的では行わない。
 - 対象ごとに、対応PR、解消を確認できた検出結果、未解決・未確認のものと理由を報告する。権限不足や外部作業で進めない部分を分け、独立して対応できるものは進める。
-
-## 必要なときに参照するGitHub公式資料
-
-- [Malwareアラートの確認](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-dependabot-alerts/manage-malware-alerts)
-- [Code scanningのブランチ・経路・解析状態の確認](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-code-scanning-alerts/assess-alerts)
-- [Secret scanningの修正とクローズ](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-secret-scanning-alerts/resolving-alerts)
