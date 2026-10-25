@@ -18,7 +18,7 @@ description: GitHubのセキュリティアラートや解析警告への対応�
 
 | 検出結果 | このスキルで判断すること |
 | --- | --- |
-| Dependabot Vulnerabilities | manifest・lockfile・実際の依存経路を照合する。既存の対応PRがあれば [review-dependabot-prs](../review-dependabot-prs/SKILL.md) へつなぎ、重複PRを作らない。新規の更新でも同スキルの更新元・互換性の判断基準を使う。修正版がない、または安全に更新できないものは未解決として残す。 |
+| Dependabot Vulnerabilities | manifest・lockfile・実際の依存経路を照合する。既存の対応PRがあれば [review-dependabot-prs](../review-dependabot-prs/SKILL.md) へつなぎ、重複PRを作らない。新規の更新でも同スキルの更新元・互換性の判断基準を使う。resolutions・overridesやlockfileの部分的な書き換えで推移的依存だけを差し替えず、古い版を固定している直接依存を上げる。更新で既定値や生成物が変わったら、設定で旧い動作に戻さず、利用側のコードを合わせる。既存の回避策を前例にしない。修正版がない、または安全に更新できないものは未解決として残し、移行など本来の対応を示す。 |
 | Dependabot Malware | 脆弱性アラートとは分けて、悪意あるパッケージ・版と導入経路を確認する（[Malwareアラートの確認](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-dependabot-alerts/manage-malware-alerts)）。疑わしい版を調査やテストのために実行せず、削除・信頼できる版への置換を検討する。既に実行された場合の影響調査や認証情報の対応は、依存更新PRだけで解決したと扱わない。 |
 | Code scanning | CodeQLに限らず、検出ツール・ルール・対象ブランチ／コミット・解析設定を確認する（[Code scanningのブランチ・経路・解析状態の確認](https://docs.github.com/en/code-security/how-tos/manage-security-alerts/manage-code-scanning-alerts/assess-alerts)）。指摘箇所から実際の到達経路をたどり、安全性の判断・対策は [security-review](../security-review/SKILL.md) を使う。品質上の指摘は、そのルールが指す動作・仕様との不一致を確認する。 |
 | 解析の失敗・警告 | 解析不能、対象言語やファイルの欠落、権限不足など、検出の有効性に影響する原因を調べる。実際の脆弱性と件数を混ぜず、必要なら解析設定の修正PRに分ける。 |
