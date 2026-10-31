@@ -77,9 +77,10 @@ agent-plugins/
 ├── .claude-plugin/       # Claude Code 向けプラグイン定義と、両ツールが読むマーケットプレイス定義
 ├── .codex-plugin/        # Codex 向けプラグイン定義
 ├── skills/               # 各スキルの定義（SKILL.md）
-└── hooks/                # フック設定と共通実行スクリプト
-    ├── hooks.json
-    └── scripts/
+├── hooks/                # フック設定と共通実行スクリプト
+│   ├── hooks.json
+│   └── scripts/
+└── tests/                # 編集後フックのテスト
 ```
 
 ## プラグインの更新
