@@ -18,7 +18,7 @@ Claude Code と OpenAI Codex で同じ `SKILL.md` とフックのスクリプト
 
 | スキル | 主な役割 |
 |---|---|
-| `coordinate-sessions` | 作業を、守る条件を保ったまま、親セッションの計画と記録のもとで子セッションに分けて進行 |
+| `coordinate-sessions` | 守る条件を保ったまま、作業を親セッションの計画と記録のもとで子セッションに分けて進行 |
 | `create-branch` | 基点ブランチを確認し、作業ブランチを作成 |
 | `commit` | 変更内容を意味のある単位にまとめてコミット |
 | `create-pr` | 変更内容と検証結果をまとめたプルリクエストを作成 |
@@ -27,7 +27,7 @@ Claude Code と OpenAI Codex で同じ `SKILL.md` とフックのスクリプト
 | `release` | リポジトリの規約に沿ったタグ打ち・リリースノート作成 |
 | `pin-github-actions` | 外部GitHub Actionsの参照をcommit SHAに固定・検証 |
 | `review-dependabot-prs` | 依存関係更新PRの変更内容・CI状態をチェックし、マージ可否を判断 |
-| `fix-security-alerts` | GitHubの検出結果・解析警告を切り分け、既存スキルを使って対応PRを作成・解消状態を確認 |
+| `fix-security-alerts` | GitHubの検出結果・解析警告を切り分け、修正PRを作成して解消を確認 |
 | `spec-based-testing` | 仕様と振る舞いに基づくテストケースの設計 |
 | `security-review` | 入力値・権限・通信などのセキュリティ観点でのレビュー・改善 |
 | `clear-writing` | 文書・PR本文・コードコメントを、一般的な用語と図・表でわかりやすく書くための決まり |
@@ -51,7 +51,7 @@ flowchart LR
 | 対象 | 処理 |
 |---|---|
 | Terraform（`.tf`） | 編集したファイルだけを `terraform fmt` で整形します。そのディレクトリが初期化済み（`.terraform` がある）なら、`terraform validate` も実行します |
-| Web関連ファイル（`.ts`、`.tsx`、`.js`、`.jsx`、`.json`、`.css` など） | ファイルと同じか上位のディレクトリ（リポジトリのルートまで）に `biome.json` か `biome.jsonc` があり、`node_modules` にBiomeがインストールされている場合に、`biome check --write` を実行します |
+| Web関連ファイル（`.ts`、`.tsx`、`.js`、`.jsx`、`.json`、`.jsonc`、`.css`、`.html`） | ファイルと同じか上位のディレクトリ（リポジトリのルートまで）に `biome.json` か `biome.jsonc` があり、その場所か上位の `node_modules` にBiomeがインストールされている場合に、`biome check --write` を実行します |
 
 ツールが見つからない場合や、Terraformが未初期化の場合は、スキップした理由を出力します。ツールのインストールや `terraform init` は行いません。
 
@@ -65,7 +65,7 @@ flowchart LR
 | 作業ディレクトリ | Gitリポジトリのルート |
 | 引数 | 編集したファイルの絶対パス。1回の編集で複数のファイルを変えた場合は、まとめて1回で渡します |
 | 標準入力 | 編集イベントのJSONは渡しません |
-| 結果 | 標準出力・標準エラー出力・終了コードをそのまま返します |
+| 結果 | 標準出力・標準エラー出力・終了コードをそのまま返します。両ツールが標準エラー出力をエージェントに渡すのは終了コードが2のときだけなので、指摘を渡すときは標準エラー出力に書いて2で終えます |
 | 時間の上限 | `hooks/hooks.json` の `timeout`（秒）を超えると、フック全体が中止され、出力は返りません |
 
 `.claude/hooks/post-edit.sh` がシンボリックリンクでリポジトリ外のファイルを指す場合は、このスクリプトも標準処理も実行しません。
